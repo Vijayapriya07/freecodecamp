@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>body{
+    font-size: 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #020b70;
+  }
+  form{
+    width: 60vw;
+  max-width: 500px;
+  min-width: 300px;
+  margin: 0 auto;
+  padding-bottom: 2em;
+  }
+  input, select, textarea{
+    background-color: #000000;
+    color: antiquewhite;}</style> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programmers Survey Form</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+    <h1 id=title style="color:#ffffff;">Programmers Voice! Tell us your choice!</h1>
+    <p id="description" style="color:#ffffff;">We love to know about which technology and tools software engineers are using world wide! Each and every Developers opinions are very precious to us!</p>
+    <div id="main">
+        <form id="survey-form" style="color:#cbcaf6;">
+          <fieldset><legend>Personal Infomatoin</legend>
+            <label id="name-label"><b>Name:</b></label>
+            <input id="name" type="name" name="name" class="form" required placeholder="Full Name"><br>
+            <br>
+            <label id="email-label"><b>Email:</b></label>
+            <input id="email" type="email" name="email" class="form" required placeholder="example@mail.com"><br>
+            <br>
+            <label id="number-label"><b>Age:</b></label>
+            <input id="number" type="number" name="number" class="form" min="5" max="99" placeholder="12+"> 
+            <br></fieldset>
+            <br><fieldset><legend><strong>Programming language you are expert at: </strong></legend><br>
+              <select id="dropdown" name="code-lang" class="form">
+                <option value="">Select one</option>
+                  <option value="C">C (Programming Language)</option>
+                  <option value="Python">Python</option>
+                  <option value="C++">C++</option>
+                  <option value="Java">Java</option>
+              </select></fieldset>
+            <br><br>
+            <fieldset><legend id="job-label"><b>Employment Status:</b></legend><br>
+              <input type="radio" class="radio-inline" name="employee" value="employed" checked> Full-time.<br>
+              <input type="radio" class="radio-inline" name="employee" value="freelancer"> Part-time.<br>
+              <input type="radio" class="radio-inline" name="employee" value="applier"> Fresher.<br>
+              <input type="radio" class="radio-inline" name="employee" value="unemployed"> I am a student.</fieldset>           
+          <br><br>
+          <fieldset> <legend id="os-label"><b>Operating system experience: </b></legend><br>
+            <input type="checkbox" name="os1" value="windows" checked> Windows-OS<br>
+            <input type="checkbox" name="os2" value="linux"> Linux-OS<br>
+            <input type="checkbox" name="0s3" value="mac"> Mac-OS<br></fieldset>
+           
+           <br>
+           <fieldset><legend id="os-label"><b>Latest technology experience:</b></legend><br>
+            <input type="checkbox" name="tech1" value="flutter"> Flutter UI<br>
+            <input type="checkbox" name="tech2" value="nodejs"> Node.js<br>
+            <input type="checkbox" name="tech3" value="git"> Github<br>
+            <input type="checkbox" name="tech3" value="devops"> Dev-Ops<br>
+            <br>
+            <label id="comments-label">Do you have any suggestion about this survey?</label><br>
+            <textarea style= height:150px;" class="form" placeholder="Please feel free to write a review..."></textarea></fieldset>
+         <br><br>
+            <input id="submit" type="submit"  class="form" style="color: #ffffff; background-color: #82a1bd;">
+    </form>
+  </body>
+</html>
