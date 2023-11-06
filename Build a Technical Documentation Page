@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JAVA</title>
+    <style>
+        @media (prefers-reduced-motion: no-preference) {
+        * {
+            scroll-behavior: smooth;}
+        }
+        nav {
+          width: 50%;
+          max-width: 500px;
+          height: 50px;
+          padding-bottom: 5px;
+        }
+
+        nav >header> ul {
+          display: flex;
+          justify-content: space-evenly;
+          flex-wrap: wrap;
+          align-items: center;
+          padding-inline-start: 0;
+          margin-block: 0;
+          height: 100%;
+        }
+        nav >header> ul > li {
+          color: #161695;
+          margin: 0 0.2rem;
+          padding: 0.2rem;
+          display: block;
+        }
+
+        nav > header>ul > li:hover {
+          background-color: #dfdfe2;
+          color: #1b1b32;
+          cursor: pointer;
+        }
+
+        li > a {
+          color: inherit;
+          text-decoration: none;
+        }
+      body{
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      }
+      p{
+        font-style: italic;
+      }
+      code{
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="main-doc">
+      <header>
+      <h1>JAVA Tutorial</h1>
+    </header>
+    <nav id="navbar">
+        <header>
+        <ul>
+          <li><a class="nav-link" href="#Home">Home</a></li>
+          <li><a class="nav-link" href="#introduction">Introduction</a></li>
+          <li><a class="nav-link"  href="#Data_types">Data types</a></li>
+          <li><a class="nav-link" href="#Variables">Variables</a></li>
+          <li><a class="nav-link" href="#class_object">Class Object</a></li>
+        </ul>
+        </header>
+      </nav>
+      <section class="main-section" id="Home">
+        <header>
+          <h2>Home</h2>
+        </header>
+          <p>Java is a popular programming language.<br>Java is used to develop mobile apps, web apps, desktop apps, games and much more.</p>
+        
+        <p><strong>Some basic rules</strong></p>
+        <ul>
+          <li>Each file name has a initial letter Captial</li>
+          <li>File name and main class name should be same</li>
+        </ul>
+        <p>Example program</p>
+        <code>
+          public class Main {
+            public static void main(String[] args) {
+              System.out.println("Hello World");  }
+          }
+        </code>
+      </section>
+      <section class="main-section" id="introduction">
+        <header >
+          <h2>Introduction</h2>
+        </header>
+        <h3>what is java ?</h3>
+        <p>Java is a popular programming language, created in 1995.<br>It is owned by Oracle, and more than 3 billion devices run Java.</p>
+        <p>It is used for:</p>
+        <ul><li>Mobile applications (specially Android apps)</li>
+          <li>Desktop applications</li>
+          <li>Web applications</li>
+          <li>Web servers and application servers</li>
+          <li>Games</li>
+          <li>Database connection</li>
+        </ul>
+        <p>Example program</p>
+        <code>
+          public class Main {
+            import java.util.Scanner;
+            public static void main(String[] args) {
+              Scanner sc= new Scanner(System.in);
+              System.out.println("sample input");
+              int n=sc.nextInt();}
+          }
+        </code>
+      </section>
+      <section  class="main-section" id="Data_types">
+        <header >
+          <h2>Data types</h2>
+        </header>
+        <p>Data types are divided into two groups:</p>
+        <ul>
+          <li>Primitive data types - includes byte, short, int, long, float, double, boolean and char</li>
+          <li>Non-primitive data types - such as String, Arrays and Classes</li>
+        </ul>
+        <p>Examples</p>
+        <code>
+          int myNum = 5;               // Integer (whole number)
+          float myFloatNum = 5.99f;    // Floating point number
+          char myLetter = 'D';         // Character
+          boolean myBool = true;       // Boolean
+          String myText = "Hello";     // String
+        </code>
+      </section>
+      <section class="main-section" id="Variables">
+        <header >
+          <h2>Variables</h2>
+        </header>
+        <p>Variables are containers for storing data values.<br>In Java, there are different types of variables, for example:</p>
+        <ul>
+          <li>String - stores text, such as "Hello". String values are surrounded by double quotes</li>
+          <li>int - stores integers (whole numbers), without decimals, such as 123 or -123</li>
+          <li>float - stores floating point numbers, with decimals, such as 19.99 or -19.99</li>
+          <li>char - stores single characters, such as 'a' or 'B'. Char values are surrounded by single quotes</li> 
+          <li>boolean - stores values with two states: true or false</li>
+        </ul>
+        <p>Example</p>
+        <code>
+          String name = "John";
+          System.out.println(name);
+          int myNum = 15;
+          System.out.println(myNum);
+        </code>
+      </section>
+      <section class="main-section" id="class_object">
+        <header>
+          <h2>Class Object</h2>
+        </header>
+        <p>Java is an object-oriented programming language.<br>Everything in Java is associated with classes and objects, along with its attributes and methods. For example: in real life, a car is an object. The car has attributes, such as weight and color, and methods, such as drive and brake.</p>
+        <p>A Class is like an object constructor, or a "blueprint" for creating objects.</p>
+        <p>Remember that the name of the java file should match the class name. In this example, we have created two files in the same directory/folder:</p>
+        <ul>
+          <li>Main.java</li>
+          <li>Second.java</li>
+        </ul>
+        <code>
+          //main class
+          public class Main {
+            int x = 5;
+          }
+          //Second class
+          class Second {
+            public static void main(String[] args) {
+              Main myObj = new Main();
+              System.out.println(myObj.x);}
+          }
+        </code>
+      </section>
+    </main>  
+    <footer>
+      <p>For study more <a href="https://www.w3schools.com/java/default.asp" target="_blank">Visit w3school</a></p>
+    </footer>
+  </body>
+</html>
