@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UNF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Automation System</title>
+    <style>
+      @media { 
+        #nav-bar>ul>li>a {
+          display: block;
+          width: 100%;
+          text-align: right;
+          text-decoration: none;
+          color: white;
+        }
+      }
+      #nav-bar> ul {
+          display: flex;
+          justify-content: space-evenly;
+          flex-wrap: wrap;
+          align-items: center;
+          padding-inline-start: 0;
+          margin-block: 0;
+          height: 100%;
+      }
+      #nav-bar>ul > li {
+          color: #161695;
+          margin: 0 0.2rem;
+          padding: 0.2rem;
+          display: block;
+        }
+
+      #nav-bar>ul > li:hover {
+          background-color: rgb(226, 163, 39);
+          color: #1b1b32;
+          cursor: pointer;
+      }
+      h2, h3, p {
+        font-family: 'Raleway', sans-serif;
+      } 
+      body {
+          background-color: #8bb0e6;
+      }
+      header {
+        position: fixed;
+        top:0;
+        left: 0;
+        width:100%;
+        color: white;
+        font-family: 'Exo 2', sans-serif;
+        display:flex;
+        flex-direction: row;
+        float:inline-end;
+        height:50px;
+      }
+      h1{
+        padding-top: 20px;
+        padding-bottom: 0;
+      }
+      section{
+        padding-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Smart Automation System</h1>
+      <header id="header">
+        <img id="header-img" src="https://thumbs.dreamstime.com/b/digital-technology-safety-automation-smart-home-logo-concept-graphic-design-digital-technology-safety-automation-smart-home-logo-156627092.jpg" width="50px" height="40px">
+        <nav id="nav-bar">
+          <ul>
+            <li><a class="nav-link" href="#Introduction">Introduction</a></li>
+            <li><a class="nav-link" href="#Types-of-product">Types</a></li>
+            <li><a class="nav-link" href="#price">Price</a></li>
+          </ul>
+        </nav>
+      </header>
+      <section id="Introduction">
+        <h2>Introduction</h2>
+        <p>Revolutionize the way you garden with the EcoTech Smart Garden's intelligent automated system. Experience the joy of growing your favorite plants without the hassle of constant monitoring and manual care. Our cutting-edge technology takes care of the essentials, allowing you to enjoy the benefits of a thriving garden effortlessly.</p>
+        <iframe id="video" src="https://player.vimeo.com/external/286292019.sd.mp4?s=4232cafab437fbc5d95df661766b4f76e094d0b7&profile_id=164&oauth2_token_id=57447761" width="500px" height="250px">rabbit</iframe>
+      </section>
+      <section id="Types-of-product">
+        <h2>Types of product</h2>
+        <h3>Seamless Plant Care</h3>
+        <p>The <strong>Garden's automated system</strong> ensures your plants receive the right amount of water, nutrients, and light at the optimal times. Say goodbye to the guesswork and hello to consistently lush and healthy plants.</p>
+        <h3>Adaptive Plant Monitoring</h3>
+        <p>Equipped with advanced sensors, the Smart Garden continuously monitors the health and growth of your plants. Receive real-time updates through the mobile app, providing insights into your garden's well-being at your fingertips.</p>
+        <h3> Light Optimization</h3>
+        <p>The Smart Garden's LED grow lights simulate natural sunlight, promoting photosynthesis and ensuring your plants get the light they need for robust growth. Customize light settings based on the specific requirements of each plant in your garden.</p>
+        <h3>Intuitive Controls</h3>
+        <p>Control and customize your Smart Garden with ease using the user-friendly mobile app. Set watering schedules, adjust light intensity, and receive personalized care tips based on your plant selection. It's gardening made simple.</p>
+      </section>
+      <section id="price">
+        <h2>Price Option</h2>
+        <h3>Basic Package</h3>
+        <ul>
+          <li>EcoTech Smart Garden Unit</li>
+          <li>Starter Seed Kit</li>
+          <li>Mobile App Access</li>
+          <li>1-year Warranty</li>
+          <li>Price: $129.99</li>
+        </ul>
+        <button type="button">Select</button>
+        <h3>Deluxe Package</h3>
+        <ul>
+          <li>EcoTech Smart Garden Unit</li>
+          <li>Premium Seed Collection</li>
+          <li>Adjustable Stand for Optimal Height</li>
+          <li>LED Grow Light Enhancements</li>
+          <li>Mobile App Access</li>
+          <li>2-year Warranty</li>
+          <li>Price: $199.99</li>
+        </ul>
+        <button type="button">Select</button>
+        <h3>Ultimate Garden Enthusiast Bundle</h3>
+        <ul>
+          <li>EcoTech Smart Garden Unit</li>
+          <li>Comprehensive Seed Collection</li>
+          <li>Adjustable Stand for Optimal Height</li>
+          <li>Advanced LED Grow Light System</li>
+          <li>Smart Garden Accessories Kit (Extra Trays, Nutrients)</li>
+          <li>Mobile App Access with Exclusive Features</li>
+          <li>3-year Warranty</li>
+          <li>Priority Customer Support</li>
+          <li>Price: $299.99</li>
+        </ul>
+        <button type="button">Select</button>
+      </section>
+      <section>
+        <form id="form" action="https://www.freecodecamp.com/email-submit">
+          <fieldset>
+            <legend>Small survey</legend>
+            <label id="mail">Email:</label>
+            <input id="email" type="email" placeholder="abc@gmail.com" name="email"><br>
+            <label>what you like in this product?</label><br>
+            <input id="answer" type="radio" name="answer" checked>full product<br>
+            <input id="answer" type="radio" name="answer">partial product<br>
+            <input id="answer" type="radio" name="answer">don't like it<br>
+          </fieldset>
+          <input id="submit" type="submit">
+        </form>
+      </section>
+    </main>
+    <footer>
+      <p>Embrace a new era of gardening with the EcoTech Smart Garden's smart automated system. Watch as your plants flourish, and experience the joy of effortless, green living. Order now and elevate your gardening experience!</p>
+    </footer>
+  </body>
+</html>
