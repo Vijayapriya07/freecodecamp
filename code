@@ -1,0 +1,930 @@
+1
+.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+  
+})
+
+export class AppComponent {
+	groceries: string[] = ['Apples', 'Bananas', 'Mango', 'Oranges', 'Grapes']; 
+	getFruitClass(fruit: string): string{
+		 switch(fruit) {
+			 case 'Mango': 
+			case 'Bananas':
+				 return 'tropical';
+			 case 'Apples': 
+				return 'red'; 
+			case 'Grapes': 
+				return 'purple'; 
+			default:
+				 return 'default';
+		 }
+	 }
+}
+
+.html
+<ul>
+  <li *ngFor="let fruit of groceries" [ngClass]="getFruitClass(fruit)">
+    {{ fruit }}
+  </li>
+</ul>
+
+.css
+li {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.tropical {
+  color: orange;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-style: italic;
+}
+
+.purple {
+  color: purple;
+  text-decoration: underline;
+}
+
+.default {
+  color: black;
+}
+
+	1) fruit
+
+// fruit-list.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-fruit-list',
+  templateUrl: './fruit-list.component.html',
+})
+export class FruitListComponent {
+  fruits: string[] = ['apple', 'banana', 'orange', 'grape', 'pear'];
+}
+
+
+<!-- fruit-list.component.html -->
+
+<ul *ngFor="let f of fruits" [ngSwitch]="f.name">
+<li *ngSwitchCase="'apple'" ngClass="c0">{{f.name}}</li>
+<li *ngSwitchCase="'banana'" ngClass="c1">{{f.name}}</li>
+<li *ngSwitchDefault [ngStyle]="{color : 'violet'}">{{f.name}}</li>
+</ul>
+<ul *ngFor="let f of fruits">
+    <li [ngClass]="{c0: f.name.startsWith('a') }">{{f.name}}</li>
+</ul>
+
+	2) Task management 
+	
+	<p>task works!</p>
+	<form>
+	    <h1>Task Management</h1>
+	    <input [(ngModel)]="task" placeholder="Enter new task">
+	    <button (click)="addTask()">Add Task</button>
+	 
+	    <h2>Task List</h2>
+	    <ul>
+	        <li *ngFor="let t of tasks">{{t}}</li>
+	    </ul>
+	</form>
+	 
+	import { Component } from '@angular/core';
+	import { CommonModule } from '@angular/common';
+	import { FormsModule } from '@angular/forms';
+	 
+	 
+	@Component({
+	  selector: 'app-task',
+	  standalone: true,
+	  imports: [CommonModule, FormsModule],
+	  templateUrl: './task.component.html',
+	  styleUrl: './task.component.css'
+	})
+	export class TaskComponent {
+	  task : string = '';
+	  tasks : string[] =[];
+	  addTask(){
+	    if (this.task.trim()){
+	      this.tasks.push(this.task.trim());
+	      this.task='';
+	    }
+	  }
+	}
+	 
+	
+
+Using form
+
+<form(ngSubmit)="addTask()"><h1>Task Management</h1><input[(ngModel)]="task"name="taskInput"placeholder="Enter new task"required>
+<buttontype="submit">Add Task</button>
+<h2>Task List</h2>
+<ul>
+<li*ngFor="let t of tasks">{{ t }}</li>
+</ul>
+</form>
+
+// task.component.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-task',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './task.component.html',
+  styleUrls: ['./task.component.css']
+})
+export class TaskComponent {
+  task: string = '';
+  tasks: string[] = [];
+
+  addTask() {
+    if (this.task.trim()) {
+      this.tasks.push(this.task.trim());
+      this.task = '';
+    }
+  }
+}
+
+
+	
+	3) app.component.html
+	 
+	<button (click)="fetchMovies()">Load Movies</button>
+	<h1>Movie Directory</h1>
+	<ul>
+	  <li *ngFor="let movie of movies">
+	    <h2>{{ movie.title }}</h2>
+	    <p>Release Date: {{ movie.releaseDate }}</p>
+	    <p>{{ movie.overview }}</p>
+	  </li>
+	</ul>
+	 
+	import { HttpcrudService } from './httpcrud.service';
+	import { HttpClientModule } from '@angular/common/http';
+	 import { component } from '@angular/core';
+	Import { commonModule} from '@angular/common';
+	
+	@Component({
+	  selector: 'app-root',
+	  standalone: true,
+	  imports: [CommonModule ,HttpClientModule],
+	  providers: [HttpcrudService],
+	  templateUrl: './app.component.html',
+	  styleUrls: ['./app.component.css']
+	})
+	export class AppComponent {
+	movies: any[] = [];
+	 
+	  constructor(private movieService:HttpcrudService) {}
+	 
+	  fetchMovies(): void {
+	    this.movieService.getMovies().subscribe(
+	      (data) => {
+	        this.movies = data;
+	      }
+	    );
+	  }
+	}
+	 
+	app.component.ts 
+	 
+	import { HttpClient } from '@angular/common/http';
+	import { Injectable } from '@angular/core';
+	import { CommonModule } from '@angular/common';
+	import { Observable } from 'rxjs';
+	 
+	@Injectable({
+	  providedIn: 'root'
+	})
+	export class HttpcrudService {
+	  constructor(private http: HttpClient) { }
+	api : string ="http://localhost:3000/movies";
+	getMovies(): Observable<any[]> {
+	  return this.http.get<any[]>(this.api);
+	}
+	 
+	 
+	}
+	 
+	 
+	httpcrud.service.ts
+	 
+	{
+	    "movies": [
+	      { "id": 1, "title": "Inception", "releaseDate": "2010-07-16", "overview": "A thief who steals corporate secrets through the use of dream-sharing technology." },
+	      { "id": 2, "title": "Interstellar", "releaseDate": "2014-11-07", "overview": "A team of explorers travel through a wormhole in space." }
+	    ]
+	  }
+	 
+	 
+	 
+	movie.json
+	 
+	json-server --watch ./src/movie.json
+
+4)
+<div>
+        <form>
+          <label for="name">Name:</label>
+          <input type="text"  id="name" [(ngModel)]="name"   name="name placeholder="Enter your name"/>
+        </form>
+        <h3>Your Name: {{ name }}</h3>  
+      </div>
+ 
+name: string = '';
+
+	5) 
+<div>
+<input type="radio" name="r1" (click)="color='violet'">Violet
+<input type="radio" name="r1" (click)="color='pink'">Pink
+<input type="radio" name="r1" (click)="color='orange'">Orange
+    <p [appSample]="color">Highlight me!</p>
+</div>
+ 
+color='';
+ 
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+@Directive({
+  selector: '[appSample]',
+  standalone: true
+})
+export class SampleDirective {
+  constructor(private e1:ElementRef) { }
+  @Input() appSample :string
+@HostListener('mouseenter') onMouseEnter(){  
+  this.highlight(this.appSample)
+}
+@HostListener('mouseleave') onMouseLeave()
+{
+  this.highlight('blue')
+}
+private highlight(color:string){
+  this.e1.nativeElement.style.backgroundColor=color;
+}
+}
+
+6)
+
+<form [formGroup]="angForm"  (ngSubmit)="submitData()">
+    <label>Name:
+        <input type="text" formControlName="name">
+    </label>
+    <div *ngIf="angForm.controls['name'].invalid && angForm.controls['name'].touched">
+         <div *ngIf="angForm.controls['name'].errors['required']"  [ngStyle]="{'color':'red'}">Name is required</div>
+    </div>
+ 
+ 
+    <div>
+        <label>Mobile:
+            <input type="tel" formControlName="mobile">
+        </label>
+        <div *ngIf="angForm.controls['mobile'].invalid && angForm.controls['mobile'].touched">
+            <div *ngIf="angForm.controls['mobile'].errors['required']"  [ngStyle]="{'color':'red'}">Mobile Number is required</div>
+            <div *ngIf="angForm.controls['mobile'].errors['pattern']"  class="c2">Please Enter 10 digit</div>
+        </div>
+    </div>
+ 
+    <div>
+        <label>Email:
+            <input type="email" formControlName="email">
+        </label>
+        <div *ngIf="angForm.controls['email'].invalid && angForm.controls['email'].touched">
+            <div *ngIf="angForm.controls['email'].errors['required']"  [ngStyle]="{'color':'red'}">Email is required</div>
+            <div *ngIf="angForm.controls['email'].errors['pattern']"  class="c2">Please Enter proper mail address</div>
+        </div>
+    </div>
+ 
+ 
+    <div>
+        <label>Password:
+            <input type="password" formControlName="password">
+        </label>
+        <div *ngIf="angForm.controls['password'].invalid && angForm.controls['password'].touched">
+            <div *ngIf="angForm.controls['password'].errors['required']" [ngStyle]="{'color':'red'}">Password is required</div>
+            <div *ngIf="angForm.controls['password'].errors['minlength']" class="c2">Password must be at least 6 characters</div>
+        </div>
+    </div>
+   
+    <button type="submit" [disabled]="angForm.invalid">SUBMIT</button>
+</form>
+ 
+// app.component.ts
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  imports: ['FormBuilder', 'FormGroup'],
+  templateUrl: './app.component.html',
+styleUrls: ['./app/component.css']
+})
+export class AppComponent {
+  angForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.angForm = this.fb.group({
+      name: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]],
+      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  submitData() {
+    if (this.angForm.valid) {
+      alert("Submitted successfully");
+    } else {
+      alert("Form is invalid");
+    }
+  }
+}
+
+8)
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'revstr',
+  standalone: true
+})
+export class RevstrPipe implements PipeTransform {
+  transform(value: string): string {
+    if (!value) {
+      return '';
+    }
+    return value.split('').reverse().join('');
+  }
+}
+
+
+<input [(ngModel)]="ans" type="text">
+  <p>{{ans | revstr}}</p>
+ 
+app.component.html
+ 
+
+
+9)
+// address-form.component.ts
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+})
+export class AppComponent {
+  addressForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.addressForm = this.fb.group({
+      addresses: this.fb.array([]),
+    });
+  }
+
+  get addresses(): FormArray {
+    return this.addressForm.get('addresses') as FormArray;
+  }
+
+  addAddress() {
+    const addressGroup = this.fb.group({
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      postalCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+    });
+    this.addresses.push(addressGroup);
+  }
+
+  removeAddress(index: number) {
+    this.addresses.removeAt(index);
+  }
+
+  onSubmit() {
+    if (this.addressForm.valid) {
+      console.log(this.addressForm.value);
+    } else {
+      this.addressForm.markAllAsTouched(); // Mark all fields as touched to show validation messages
+    }
+  }
+}
+
+
+
+<p>address-form works!</p>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="addresses">
+      <div *ngFor="let address of addressForm.get('addresses')['controls'] ; let i = 'index'" [formGroupName]='i' class="address-group">
+        <label>
+          Street:
+          <input formControlName="street" />
+          <div *ngIf="address.get('street').touched && address.get('street').invalid">
+            <small *ngIf="address.get('street').errors['required']">Street is required.</small>
+          </div>
+        </label>
+ 
+        <label>
+          City:
+          <input formControlName="city" />
+          <div *ngIf="address.get('city').touched && address.get('city').invalid">
+            <small *ngIf="address.get('city').errors['required']">City is required.</small>
+          </div>
+        </label>
+ 
+        <label>
+          Postal Code:
+          <input formControlName="postalCode" />
+          <div *ngIf="address.get('postalCode').touched && address.get('postalCode').invalid">
+            <small *ngIf="address.get('postalCode').errors['required']">Postal Code is required.</small>
+            <small *ngIf="address.get('postalCode').errors['pattern']">Invalid postal code.</small>
+          </div>
+        </label>
+ 
+        <button type="button" (click)="removeAddress(i)">Remove Address</button>
+        <hr >
+      </div>
+    </div>
+ 
+    <button type="button" (click)="addAddress()">Add Address</button>
+    <button type="submit" [disabled]="addressForm.invalid">Submit</button>
+  </form>
+
+1
+.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+  
+})
+
+export class AppComponent {
+	groceries: string[] = ['Apples', 'Bananas', 'Mango', 'Oranges', 'Grapes']; 
+	getFruitClass(fruit: string): string{
+		 switch(fruit) {
+			 case 'Mango': 
+			case 'Bananas':
+				 return 'tropical';
+			 case 'Apples': 
+				return 'red'; 
+			case 'Grapes': 
+				return 'purple'; 
+			default:
+				 return 'default';
+		 }
+	 }
+}
+
+.html
+<ul>
+  <li *ngFor="let fruit of groceries" [ngClass]="getFruitClass(fruit)">
+    {{ fruit }}
+  </li>
+</ul>
+
+.css
+li {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.tropical {
+  color: orange;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-style: italic;
+}
+
+.purple {
+  color: purple;
+  text-decoration: underline;
+}
+
+.default {
+  color: black;
+}
+
+	1) fruit
+
+// fruit-list.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-fruit-list',
+  templateUrl: './fruit-list.component.html',
+})
+export class FruitListComponent {
+  fruits: string[] = ['apple', 'banana', 'orange', 'grape', 'pear'];
+}
+
+
+<!-- fruit-list.component.html -->
+
+<ul *ngFor="let f of fruits" [ngSwitch]="f.name">
+<li *ngSwitchCase="'apple'" ngClass="c0">{{f.name}}</li>
+<li *ngSwitchCase="'banana'" ngClass="c1">{{f.name}}</li>
+<li *ngSwitchDefault [ngStyle]="{color : 'violet'}">{{f.name}}</li>
+</ul>
+<ul *ngFor="let f of fruits">
+    <li [ngClass]="{c0: f.name.startsWith('a') }">{{f.name}}</li>
+</ul>
+
+	2) Task management 
+	
+	<p>task works!</p>
+	<form>
+	    <h1>Task Management</h1>
+	    <input [(ngModel)]="task" placeholder="Enter new task">
+	    <button (click)="addTask()">Add Task</button>
+	 
+	    <h2>Task List</h2>
+	    <ul>
+	        <li *ngFor="let t of tasks">{{t}}</li>
+	    </ul>
+	</form>
+	 
+	import { Component } from '@angular/core';
+	import { CommonModule } from '@angular/common';
+	import { FormsModule } from '@angular/forms';
+	 
+	 
+	@Component({
+	  selector: 'app-task',
+	  standalone: true,
+	  imports: [CommonModule, FormsModule],
+	  templateUrl: './task.component.html',
+	  styleUrl: './task.component.css'
+	})
+	export class TaskComponent {
+	  task : string = '';
+	  tasks : string[] =[];
+	  addTask(){
+	    if (this.task.trim()){
+	      this.tasks.push(this.task.trim());
+	      this.task='';
+	    }
+	  }
+	}
+	 
+	
+
+Using form
+
+<form(ngSubmit)="addTask()"><h1>Task Management</h1><input[(ngModel)]="task"name="taskInput"placeholder="Enter new task"required>
+<buttontype="submit">Add Task</button>
+<h2>Task List</h2>
+<ul>
+<li*ngFor="let t of tasks">{{ t }}</li>
+</ul>
+</form>
+
+// task.component.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-task',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './task.component.html',
+  styleUrls: ['./task.component.css']
+})
+export class TaskComponent {
+  task: string = '';
+  tasks: string[] = [];
+
+  addTask() {
+    if (this.task.trim()) {
+      this.tasks.push(this.task.trim());
+      this.task = '';
+    }
+  }
+}
+
+
+	
+	3) app.component.html
+	 
+	<button (click)="fetchMovies()">Load Movies</button>
+	<h1>Movie Directory</h1>
+	<ul>
+	  <li *ngFor="let movie of movies">
+	    <h2>{{ movie.title }}</h2>
+	    <p>Release Date: {{ movie.releaseDate }}</p>
+	    <p>{{ movie.overview }}</p>
+	  </li>
+	</ul>
+	 
+	import { HttpcrudService } from './httpcrud.service';
+	import { HttpClientModule } from '@angular/common/http';
+	 import { component } from '@angular/core';
+	Import { commonModule} from '@angular/common';
+	
+	@Component({
+	  selector: 'app-root',
+	  standalone: true,
+	  imports: [CommonModule ,HttpClientModule],
+	  providers: [HttpcrudService],
+	  templateUrl: './app.component.html',
+	  styleUrls: ['./app.component.css']
+	})
+	export class AppComponent {
+	movies: any[] = [];
+	 
+	  constructor(private movieService:HttpcrudService) {}
+	 
+	  fetchMovies(): void {
+	    this.movieService.getMovies().subscribe(
+	      (data) => {
+	        this.movies = data;
+	      }
+	    );
+	  }
+	}
+	 
+	app.component.ts 
+	 
+	import { HttpClient } from '@angular/common/http';
+	import { Injectable } from '@angular/core';
+	import { CommonModule } from '@angular/common';
+	import { Observable } from 'rxjs';
+	 
+	@Injectable({
+	  providedIn: 'root'
+	})
+	export class HttpcrudService {
+	  constructor(private http: HttpClient) { }
+	api : string ="http://localhost:3000/movies";
+	getMovies(): Observable<any[]> {
+	  return this.http.get<any[]>(this.api);
+	}
+	 
+	 
+	}
+	 
+	 
+	httpcrud.service.ts
+	 
+	{
+	    "movies": [
+	      { "id": 1, "title": "Inception", "releaseDate": "2010-07-16", "overview": "A thief who steals corporate secrets through the use of dream-sharing technology." },
+	      { "id": 2, "title": "Interstellar", "releaseDate": "2014-11-07", "overview": "A team of explorers travel through a wormhole in space." }
+	    ]
+	  }
+	 
+	 
+	 
+	movie.json
+	 
+	json-server --watch ./src/movie.json
+
+4)
+<div>
+        <form>
+          <label for="name">Name:</label>
+          <input type="text"  id="name" [(ngModel)]="name"   name="name placeholder="Enter your name"/>
+        </form>
+        <h3>Your Name: {{ name }}</h3>  
+      </div>
+ 
+name: string = '';
+
+	5) 
+<div>
+<input type="radio" name="r1" (click)="color='violet'">Violet
+<input type="radio" name="r1" (click)="color='pink'">Pink
+<input type="radio" name="r1" (click)="color='orange'">Orange
+    <p [appSample]="color">Highlight me!</p>
+</div>
+ 
+color='';
+ 
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+@Directive({
+  selector: '[appSample]',
+  standalone: true
+})
+export class SampleDirective {
+  constructor(private e1:ElementRef) { }
+  @Input() appSample :string
+@HostListener('mouseenter') onMouseEnter(){  
+  this.highlight(this.appSample)
+}
+@HostListener('mouseleave') onMouseLeave()
+{
+  this.highlight('blue')
+}
+private highlight(color:string){
+  this.e1.nativeElement.style.backgroundColor=color;
+}
+}
+
+6)
+
+<form [formGroup]="angForm"  (ngSubmit)="submitData()">
+    <label>Name:
+        <input type="text" formControlName="name">
+    </label>
+    <div *ngIf="angForm.controls['name'].invalid && angForm.controls['name'].touched">
+         <div *ngIf="angForm.controls['name'].errors['required']"  [ngStyle]="{'color':'red'}">Name is required</div>
+    </div>
+ 
+ 
+    <div>
+        <label>Mobile:
+            <input type="tel" formControlName="mobile">
+        </label>
+        <div *ngIf="angForm.controls['mobile'].invalid && angForm.controls['mobile'].touched">
+            <div *ngIf="angForm.controls['mobile'].errors['required']"  [ngStyle]="{'color':'red'}">Mobile Number is required</div>
+            <div *ngIf="angForm.controls['mobile'].errors['pattern']"  class="c2">Please Enter 10 digit</div>
+        </div>
+    </div>
+ 
+    <div>
+        <label>Email:
+            <input type="email" formControlName="email">
+        </label>
+        <div *ngIf="angForm.controls['email'].invalid && angForm.controls['email'].touched">
+            <div *ngIf="angForm.controls['email'].errors['required']"  [ngStyle]="{'color':'red'}">Email is required</div>
+            <div *ngIf="angForm.controls['email'].errors['pattern']"  class="c2">Please Enter proper mail address</div>
+        </div>
+    </div>
+ 
+ 
+    <div>
+        <label>Password:
+            <input type="password" formControlName="password">
+        </label>
+        <div *ngIf="angForm.controls['password'].invalid && angForm.controls['password'].touched">
+            <div *ngIf="angForm.controls['password'].errors['required']" [ngStyle]="{'color':'red'}">Password is required</div>
+            <div *ngIf="angForm.controls['password'].errors['minlength']" class="c2">Password must be at least 6 characters</div>
+        </div>
+    </div>
+   
+    <button type="submit" [disabled]="angForm.invalid">SUBMIT</button>
+</form>
+ 
+// app.component.ts
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  imports: ['FormBuilder', 'FormGroup'],
+  templateUrl: './app.component.html',
+styleUrls: ['./app/component.css']
+})
+export class AppComponent {
+  angForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.angForm = this.fb.group({
+      name: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern("^[0-9]{10}$")]],
+      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  submitData() {
+    if (this.angForm.valid) {
+      alert("Submitted successfully");
+    } else {
+      alert("Form is invalid");
+    }
+  }
+}
+
+8)
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'revstr',
+  standalone: true
+})
+export class RevstrPipe implements PipeTransform {
+  transform(value: string): string {
+    if (!value) {
+      return '';
+    }
+    return value.split('').reverse().join('');
+  }
+}
+
+
+<input [(ngModel)]="ans" type="text">
+  <p>{{ans | revstr}}</p>
+ 
+app.component.html
+ 
+
+
+9)
+// address-form.component.ts
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html',
+})
+export class AppComponent {
+  addressForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.addressForm = this.fb.group({
+      addresses: this.fb.array([]),
+    });
+  }
+
+  get addresses(): FormArray {
+    return this.addressForm.get('addresses') as FormArray;
+  }
+
+  addAddress() {
+    const addressGroup = this.fb.group({
+      street: ['', Validators.required],
+      city: ['', Validators.required],
+      postalCode: ['', [Validators.required, Validators.pattern(/^[0-9]{5}$/)]],
+    });
+    this.addresses.push(addressGroup);
+  }
+
+  removeAddress(index: number) {
+    this.addresses.removeAt(index);
+  }
+
+  onSubmit() {
+    if (this.addressForm.valid) {
+      console.log(this.addressForm.value);
+    } else {
+      this.addressForm.markAllAsTouched(); // Mark all fields as touched to show validation messages
+    }
+  }
+}
+
+
+
+<p>address-form works!</p>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div formArrayName="addresses">
+      <div *ngFor="let address of addressForm.get('addresses')['controls'] ; let i = 'index'" [formGroupName]='i' class="address-group">
+        <label>
+          Street:
+          <input formControlName="street" />
+          <div *ngIf="address.get('street').touched && address.get('street').invalid">
+            <small *ngIf="address.get('street').errors['required']">Street is required.</small>
+          </div>
+        </label>
+ 
+        <label>
+          City:
+          <input formControlName="city" />
+          <div *ngIf="address.get('city').touched && address.get('city').invalid">
+            <small *ngIf="address.get('city').errors['required']">City is required.</small>
+          </div>
+        </label>
+ 
+        <label>
+          Postal Code:
+          <input formControlName="postalCode" />
+          <div *ngIf="address.get('postalCode').touched && address.get('postalCode').invalid">
+            <small *ngIf="address.get('postalCode').errors['required']">Postal Code is required.</small>
+            <small *ngIf="address.get('postalCode').errors['pattern']">Invalid postal code.</small>
+          </div>
+        </label>
+ 
+        <button type="button" (click)="removeAddress(i)">Remove Address</button>
+        <hr >
+      </div>
+    </div>
+ 
+    <button type="button" (click)="addAddress()">Add Address</button>
+    <button type="submit" [disabled]="addressForm.invalid">Submit</button>
+  </form>
+
